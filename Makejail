@@ -1,0 +1,53 @@
+INCLUDE options/options.makejail
+
+ARG metube_tag=13.2
+
+FROM --entrypoint gh+AppJail-makejails/metube metube:${metube_tag}
+
+STOP
+
+STAGE start
+
+ARG metube_dark_mode=false
+ARG metube_download_dir=.
+ARG metube_audio_download_dir=${metube_download_dir}
+ARG metube_download_dirs_indexable=false
+ARG metube_custom_dirs=true
+ARG metube_create_custom_dirs=true
+ARG metube_state_dir=.
+ARG metube_temp_dir=.
+ARG metube_delete_file_on_trashcan=false
+ARG metube_url_prefix=/
+ARG metube_output_template=%(title)s.%(ext)s
+ARG metube_output_template_chapter=%(title)s - %(section_number)s %(section_title)s.%(ext)s
+ARG metube_ytdl_options?
+
+USER metube
+WORKDIR /app
+
+ENV DARK_MODE=${metube_dark_mode}
+ENV DOWNLOAD_DIR=${metube_download_dir}
+ENV AUDIO_DOWNLOAD_DIR=${metube_audio_download_dir}
+ENV DOWNLOAD_DIRS_INDEXABLE=${metube_download_dirs_indexable}
+ENV CUSTOM_DIRS=${metube_custom_dirs}
+ENV CREATE_CUSTOM_DIRS=${metube_create_custom_dirs}
+ENV STATE_DIR=${metube_state_dir}
+ENV TEMP_DIR=${metube_temp_dir}
+ENV DELETE_FILE_ON_TRASHCAN=${metube_delete_file_on_trashcan}
+ENV URL_PREFIX=${metube_url_prefix}
+ENV OUTPUT_TEMPLATE=${metube_output_template}
+ENV OUTPUT_TEMPLATE_CHAPTER=${metube_template_chapter}
+ENV YTDL_OPTIONS=${metube_ytdl_options}
+RUN daemon \
+        -r \
+        -t "Web GUI for yt-dlp with playlist support" \
+        -P /app/.master.pid \
+        -p /app/.pid \
+        -o /app/metube.log \
+            /app/.local/bin/pipenv run python3 app/main.py
+
+STAGE custom:metube_status
+
+CMD if [ -f "/app/.pid" ]; then \
+        top -ap `head -1 /app/.pid`; \
+    fi

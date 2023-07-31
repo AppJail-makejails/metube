@@ -1,0 +1,3 @@
+CMD pw useradd -n metube -c "Web GUI for yt-dlp with playlist support" -d /app -s /bin/sh
+CMD mkdir -p /app
+CMD chown metube:metube /app
