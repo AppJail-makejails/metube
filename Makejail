@@ -20,7 +20,7 @@ ARG metube_delete_file_on_trashcan=false
 ARG metube_url_prefix=/
 ARG metube_output_template=%(title)s.%(ext)s
 ARG metube_output_template_chapter=%(title)s - %(section_number)s %(section_title)s.%(ext)s
-ARG metube_ytdl_options?
+ARG metube_ytdl_options={}
 
 USER metube
 WORKDIR /app
