@@ -20,14 +20,14 @@ GLOBAL :ui: RUN npm install
 GLOBAL :ui: RUN node_modules/.bin/ng build --configuration production
 
 # Clone builder
-EXEC --before-include ${APPJAIL_PWD}/options/options.makejail \
-     --before-include ${APPJAIL_PWD}/create-user.makejail \
+EXEC --before-include ${PWD}/options/options.makejail \
+     --before-include ${PWD}/create-user.makejail \
      --before-include ${metube_builder_options} \
      --file :clone: \
      --name ${metube_clone_builder}
 # UI builder
-EXEC --before-include ${APPJAIL_PWD}/options/options.makejail \
-     --before-include ${APPJAIL_PWD}/create-user.makejail \
+EXEC --before-include ${PWD}/options/options.makejail \
+     --before-include ${PWD}/create-user.makejail \
      --before-include ${metube_builder_options} \
      --arg clone_builder=${metube_clone_builder} \
      --file :ui: \
