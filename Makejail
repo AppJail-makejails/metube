@@ -51,3 +51,9 @@ STAGE custom:metube_status
 CMD if [ -f "/app/.pid" ]; then \
         top -ap `head -1 /app/.pid`; \
     fi
+
+STAGE custom:metube_log
+
+CMD if [ -f "/app/metube.log" ]; then \
+        less -R /app/metube.log; \
+    fi
