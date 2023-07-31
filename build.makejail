@@ -1,5 +1,3 @@
-INCLUDE /var/mks/config/single.makejail
-
 INCLUDE options/options.makejail
 INCLUDE create-user.makejail
 
