@@ -9,11 +9,30 @@ github.com/alexta69/metube
 ## How to use this Makejail
 
 ```sh
+# Create the jail.
 appjail makejail -j metube -f gh+AppJail-makejails/metube \
     -o virtualnet=":metube default" \
     -o nat \
     -o expose=8081
-appjail start -s metube_dark_mode=true metube
+# Create any directory you need. The following are examples and all of them are
+# optional to configure, but may be worth setting up depending on you and your
+# environment.
+appjail cmd local metube mkdir -p app/files/downloads
+appjail cmd local metube mkdir -p app/files/audio
+appjail cmd local metube mkdir -p app/files/state
+# Remember to set the correct permissions. The UID of metube is 1001 and its GID is 1001.
+appjail cmd local metube chown -Rf 1001:1001 app/files
+# You can pass start arguments using appjail start -s but they do not persist after
+# restarting the jail, so use appjail enable -s for that.
+appjail enable metube start \
+    -s metube_dark_mode=true \
+    -s metube_download_dir=files/downloads \
+    -s metube_audio_download_dir="files/audio" \
+    -s metube_state_dir="files/state" \
+    -s metube_temp_dir="tmp" \
+    -s metube_delete_file_on_trashcan=true
+# Start the jail.
+appjail start metube
 ```
 
 ### Arguments (stage: build):
