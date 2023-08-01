@@ -26,7 +26,7 @@ appjail cmd local metube chown -Rf 1001:1001 app/files
 # restarting the jail, so use appjail enable -s for that.
 appjail enable metube start \
     -s metube_dark_mode=true \
-    -s metube_download_dir=files/downloads \
+    -s metube_download_dir="files/downloads" \
     -s metube_audio_download_dir="files/audio" \
     -s metube_state_dir="files/state" \
     -s metube_temp_dir="tmp" \
