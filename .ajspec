@@ -1,8 +1,9 @@
 tags: 13.2
 13.2.arch: amd64
 13.2.name: "metube"
-13.2.timestamp.amd64: 1690814309
-13.2.sum.amd64: ca634fabd505dfeb878b63478bd3dde924ef6808434f759c7d1f022f3ac8e34f
-13.2.size.amd64: 176317908
-13.2.source.amd64: https://dtxdf.duckdns.org/Y7A3635ez3/metube_13_2_amd64_image_appjail
-13.2.source.amd64+: https://anonget.onrender.com/Y7A3635ez3/metube_13_2_amd64_image_appjail
+13.2.timestamp.amd64: 1691182382
+13.2.sum.amd64: 6265ebf102c3318cc10ef7c102af1b3edf54ca2989d04dba44e913edab490eae
+13.2.size.amd64: 176129632
+13.2.source.amd64: https://dtxdf.duckdns.org/R5FcO161z1/metube_13_2_amd64_image_appjail
+13.2.source.amd64+: https://storm-bsd.duckdns.org/R5FcO161z1/metube_13_2_amd64_image_appjail
+13.2.source.amd64+: https://anonget.onrender.com/R5FcO161z1/metube_13_2_amd64_image_appjail
