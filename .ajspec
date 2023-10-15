@@ -1,7 +1,8 @@
-tags: 13.2
+tags+: 13.2
 13.2.arch: amd64
 13.2.name: "metube"
-13.2.timestamp.amd64: 1695830403
-13.2.sum.amd64: ee7db0649f9d17492c22b201790a57cb2e6882d026a65d7225dc67f25248c045
-13.2.size.amd64: 181797392
-13.2.source.amd64: "http://appjail.hpc.at/metube/13.2-amd64-image.appjail"
+13.2.timestamp.amd64: 1697295488
+13.2.sum.amd64: dcc8cc4aa1a19b785535546da5a83364198240d4c3f23a025005da0516687383
+13.2.size.amd64: 182510088
+13.2.source.amd64: https://images.all101bsd.download/metube/13.2-amd64-image.appjail
+13.2.source.amd64+: http://appjail.hpc.at/metube/13.2-amd64-image.appjail
