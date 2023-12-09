@@ -22,38 +22,21 @@ appjail cmd local metube mkdir -p app/files/audio
 appjail cmd local metube mkdir -p app/files/state
 # Remember to set the correct permissions. The UID of metube is 1001 and its GID is 1001.
 appjail cmd local metube chown -Rf 1001:1001 app/files
-# You can pass start arguments using appjail start -s but they do not persist after
-# restarting the jail, so use appjail enable -s for that.
-appjail enable metube start \
-    -s metube_dark_mode=true \
-    -s metube_download_dir="files/downloads" \
-    -s metube_audio_download_dir="files/audio" \
-    -s metube_state_dir="files/state" \
-    -s metube_temp_dir="tmp" \
-    -s metube_delete_file_on_trashcan=true
-# Start the jail.
-appjail start metube
+# Pass environment variables as described in
+# https://github.com/alexta69/metube#configuration-via-environment-variables
+appjail start \
+    -V DEFAULT_THEME=dark \
+    -V DOWNLOAD_DIR=files/downloads \
+    -V AUDIO_DOWNLOAD_DIR=files/audio \
+    -V STATE_DIR=files/state \
+    -V TEMP_DIR=tmp \
+    -V DELETE_FILE_ON_TRASHCAN=true \
+    metube
 ```
 
 ### Arguments (stage: build):
 
 * `metube_tag` (default: `13.2`): see [#tags](#tags).
-
-### Arguments (stage: start)
-
-* `metube_dark_mode` (default: `false`): if set to true, the UI will be in dark mode.
-* `metube_download_dir` (default: `.`): path to where the downloads will be saved.
-* `metube_audio_download_dir` (default: `${metube_download_dir}`): path to where audio-only downloads will be saved.
-* `metube_download_dirs_indexable` (default: `false`): if true, the download dirs are indexable on the webserver.
-* `metube_custom_dirs` (default: `true`): whether to enable downloading videos into custom directories within the `metube_download_dir` (or `metube_audio_download_dir`). When enabled, a drop-down appears next to the Add button to specify the download directory.
-* `metube_create_custom_dirs` (default: `true`): whether to support automatically creating directories within the `metube_download_dir` (or `metube_audio_download_dir`) if they do not exist. When enabled, the download directory selector becomes supports free-text input, and the specified directory will be created recursively.
-* `metube_state_dir` (default: `.`): path to where the queue persistence files will be saved. 
-* `metube_temp_dir` (default: `.`): path where intermediary download files will be saved. 
-* `metube_delete_file_on_trashcan` (default: `false`): if true, downloaded files are deleted on the server, when they are trashed from the "Completed" section of the UI.
-* `metube_url_prefix` (default: `/`): base path for the web server (for use when hosting behind a reverse proxy).
-* `metube_output_template` (default: `%(title)s.%(ext)s`): the template for the filenames of the downloaded videos, formatted according to [this spec](https://github.com/yt-dlp/yt-dlp/blob/master/README.md#output-template).
-* `metube_output_template_chapter` (default: `%(title)s - %(section_number)s %(section_title)s.%(ext)s`): the template for the filenames of the downloaded videos, when split into chapters via postprocessors.
-* `metube_ytdl_options` (default: `{}`): Additional options to pass to youtube-dl, in JSON format. [See available options here](https://github.com/yt-dlp/yt-dlp/blob/master/yt_dlp/YoutubeDL.py#L192). They roughly correspond to command-line options, though some do not have exact equivalents here, for example `--recode-video` has to be specified via `postprocessors`. Also note that dashes are replaced with underscores.
 
 ### Check current status
 
