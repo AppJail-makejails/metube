@@ -24,14 +24,15 @@ appjail cmd local metube mkdir -p app/files/state
 appjail cmd local metube chown -Rf 1001:1001 app/files
 # Pass environment variables as described in
 # https://github.com/alexta69/metube#configuration-via-environment-variables
-appjail start \
+appjail enable metube start \
     -V DEFAULT_THEME=dark \
     -V DOWNLOAD_DIR=files/downloads \
     -V AUDIO_DOWNLOAD_DIR=files/audio \
     -V STATE_DIR=files/state \
     -V TEMP_DIR=tmp \
-    -V DELETE_FILE_ON_TRASHCAN=true \
-    metube
+    -V DELETE_FILE_ON_TRASHCAN=true
+# Start the jail.
+appjail start metube
 ```
 
 ### Arguments (stage: build):
