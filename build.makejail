@@ -35,7 +35,7 @@ EXEC --before-include ${PWD}/options/options.makejail \
      --name ${metube_ui_builder}
 
 # Dependencies
-PKG python38 ffmpeg
+PKG python311 ffmpeg
 
 # Pipfile
 COPY --jail ${metube_clone_builder} --glob-right /app/metube/Pipfile /app
