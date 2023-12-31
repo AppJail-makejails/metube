@@ -4,7 +4,7 @@ Web GUI for youtube-dl (using the [yt-dlp](https://github.com/yt-dlp/yt-dlp) for
 
 github.com/alexta69/metube
 
-<img src="https://raw.githubusercontent.com/alexta69/metube/master/favicon/android-chrome-384x384.png" alt="metube logo" width="30%" height="auto">
+<img src="https://imgur.com/13cGROD.png" alt="metube logo" width="30%" height="auto">
 
 ## How to use this Makejail
 
