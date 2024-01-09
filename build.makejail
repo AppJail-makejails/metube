@@ -39,8 +39,6 @@ PKG python311 ffmpeg
 
 # Pipfile
 COPY --jail ${metube_clone_builder} --glob-right /app/metube/Pipfile /app
-# Favicon
-COPY --jail ${metube_clone_builder} /app/metube/favicon /app
 # App
 COPY --jail ${metube_clone_builder} /app/metube/app /app
 # UI
