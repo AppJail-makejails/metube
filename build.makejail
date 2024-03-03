@@ -17,6 +17,11 @@ GLOBAL :ui: PKG npm
 GLOBAL :ui: COPY --jail ${clone_builder} /app/metube/ui /app
 GLOBAL :ui: CMD chown -R metube:metube /app/ui
 GLOBAL :ui: WORKDIR /app/ui
+# Workaround since NPM can't install dependencies on my network due to a
+# timeout error.
+GLOBAL :ui: RUN npm config set fetch-retry-maxtimeout 120000
+GLOBAL :ui: RUN npm config set fetch-retry-mintimeout 15000
+GLOBAL :ui: RUN npm config set fetch-timeout 600000
 GLOBAL :ui: RUN npm install
 GLOBAL :ui: RUN node_modules/.bin/ng build --configuration production
 
