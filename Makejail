@@ -1,6 +1,6 @@
 INCLUDE options/options.makejail
 
-ARG metube_tag=13.3
+ARG metube_tag=13.4
 
 FROM --entrypoint gh+AppJail-makejails/metube metube:${metube_tag}
 
