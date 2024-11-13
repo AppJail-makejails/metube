@@ -12,9 +12,7 @@ USER metube
 WORKDIR /app
 
 RUN daemon \
-        -r \
         -t "Web GUI for yt-dlp with playlist support" \
-        -P /app/.master.pid \
         -p /app/.pid \
         -o /app/metube.log \
             /app/.local/bin/pipenv run python3 app/main.py
