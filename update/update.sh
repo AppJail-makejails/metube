@@ -15,3 +15,8 @@ cat -- "${BASEDIR}/README.md.template" |\
     sed -E \
         -e "s/%%TAG1%%/${TAG1}/g" \
         -e "s/%%TAG2%%/${TAG2}/g" > "${BASEDIR}/../README.md"
+
+cat -- "${BASEDIR}/build.makejail.template" |\
+    sed -E \
+        -e "s/%%PYVER%%/${PYVER}/g" \
+        -e "s/%%PYBIN%%/${PYBIN}/g" > "${BASEDIR}/../build.makejail"
