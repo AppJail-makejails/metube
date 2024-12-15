@@ -1,0 +1,64 @@
+INCLUDE options/options.makejail
+INCLUDE options/volumes.makejail
+INCLUDE create-user.makejail
+
+# Builders
+ARG metube_clone_builder=metube_clone
+ARG metube_ui_builder=metube_ui
+# Builder options
+ARG metube_builder_options
+
+GLOBAL :clone: PKG git-lite
+GLOBAL :clone: USER metube
+GLOBAL :clone: RUN git clone --depth 1 https://github.com/alexta69/metube.git /app/metube
+
+GLOBAL :ui: ARG clone_builder
+GLOBAL :ui: PKG npm
+GLOBAL :ui: COPY --jail ${clone_builder} /app/metube/ui /app
+GLOBAL :ui: CMD chown -R metube:metube /app/ui
+GLOBAL :ui: WORKDIR /app/ui
+# Workaround since NPM can't install dependencies on my network due to a
+# timeout error.
+GLOBAL :ui: RUN npm config set fetch-retry-maxtimeout 120000
+GLOBAL :ui: RUN npm config set fetch-retry-mintimeout 15000
+GLOBAL :ui: RUN npm config set fetch-timeout 600000
+GLOBAL :ui: RUN npm install
+GLOBAL :ui: RUN node_modules/.bin/ng build --configuration production
+
+# Clone builder
+EXEC --before-include ${PWD}/options/options.makejail \
+     --before-include ${PWD}/create-user.makejail \
+     --before-include ${metube_builder_options} \
+     --file :clone: \
+     --name ${metube_clone_builder}
+# UI builder
+EXEC --before-include ${PWD}/options/options.makejail \
+     --before-include ${PWD}/create-user.makejail \
+     --before-include ${metube_builder_options} \
+     --arg clone_builder=${metube_clone_builder} \
+     --file :ui: \
+     --name ${metube_ui_builder}
+
+# Dependencies
+PKG python%%PYVER%% ffmpeg
+
+# Pipfile
+COPY --jail ${metube_clone_builder} --glob-right /app/metube/Pipfile /app
+# App
+COPY --jail ${metube_clone_builder} /app/metube/app /app
+# UI
+CMD mkdir -p /app/ui/dist
+COPY --jail ${metube_ui_builder} /app/ui/dist/metube /app/ui/dist
+
+# Fix owner and group
+CMD chown -R metube:metube /app
+
+USER metube
+WORKDIR /app
+RUN %%PYBIN%% -m ensurepip
+RUN /app/.local/bin/pip3 install --no-cache-dir pipenv
+RUN /app/.local/bin/pipenv install
+
+# Destroy builders
+DESTROY --force ${metube_clone_builder}
+DESTROY --force ${metube_ui_builder}

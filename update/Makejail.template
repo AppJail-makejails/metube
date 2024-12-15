@@ -1,6 +1,6 @@
 INCLUDE options/options.makejail
 
-ARG metube_tag=13.4
+ARG metube_tag=%%TAG1%%
 ARG metube_ajspec=gh+AppJail-makejails/metube
 
 FROM --entrypoint "${metube_ajspec}" metube:${metube_tag}
