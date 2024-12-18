@@ -1,7 +1,6 @@
 INCLUDE options/options.makejail
 INCLUDE options/volumes.makejail
 INCLUDE create-user.makejail
-INCLUDE resizewin-fix.makejail
 
 # Builders
 ARG metube_clone_builder=metube_clone
