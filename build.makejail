@@ -40,7 +40,7 @@ EXEC --before-include ${PWD}/options/options.makejail \
      --name ${metube_ui_builder}
 
 # Dependencies
-PKG python311 ffmpeg
+PKG python312 ffmpeg
 
 # Pipfile
 COPY --jail ${metube_clone_builder} --glob-right /app/metube/Pipfile /app
@@ -55,7 +55,7 @@ CMD chown -R metube:metube /app
 
 USER metube
 WORKDIR /app
-RUN python3.11 -m ensurepip
+RUN python3.12 -m ensurepip
 RUN /app/.local/bin/pip3 install --no-cache-dir pipenv
 RUN /app/.local/bin/pipenv install
 
